@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- DispatcherServlet用のBean定義ファイル -->
+    <!-- DispatcherServletは、このファイルを読み込んで自分用のApplicationContextを生成する -->
+    <!-- このApplicationContextは、ContextLoaderListenerの生成したルートApplicationContextの子供となる -->
+
+    <!-- 指定したパッケージ以下のクラスをスキャンし、@Component等のアノテーションが付与されている -->
+    <!-- クラスのオブジェクトを自動的にBeanとしてApplicationContextに登録する -->
+    <!-- @Component以外にも、@Controller、@Service、@Repository等でも自動的にBean登録される -->
+    <context:component-scan base-package="app.web.message_board" />
+
+    <!-- Validator -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <!-- コントローラの@RequestMappingのサポート等、各種MVC関連機能の有効化 -->
+    <mvc:annotation-driven validator="validator" />
+
+    <!-- 静的リソースのハンドリングの有効化 -->
+    <!-- 例えばURL「/[context-path]/resources/file1」へのリクエストに対して -->
+    <!-- ファイル「[warファイルのルート]/resources/file1」の内容をレスポンスとして返す -->
+    <!-- warファイルのルートは、ソースコード上では「src/main/webapp」ディレクトリに当たる -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
+    <!-- ViewResolverの登録 -->
+    <mvc:view-resolvers>
+        <!-- JSP用のViewResolver -->
+        <mvc:jsp prefix="/WEB-INF/views/" />
+    </mvc:view-resolvers>
+
+    <!-- JDBCデータソースの設定を記載したプロパティファイルを読み込む -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+    <!-- JDBCデータソース -->
+    <!-- NOTE1: アプリケーションサーバが提供するデータソースをJNDI経由で取得して使う方法もある。 -->
+    <!-- NOTE2: Spring Frameworkが提供する「DriverManagerDataSource」クラスはテスト用の簡易実装であるため、使用してはいけない。 -->
+    <bean id="dataSource1" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <property name="maxTotal" value="${jdbc.maxTotal}" />
+    </bean>
+
+    <!-- トランザクションマネージャ -->
+    <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource1" />
+    </bean>
+
+    <!-- @Transactionalによるトランザクション管理の有効化 -->
+    <tx:annotation-driven transaction-manager="transactionManager1" />
+
+    <!-- JDBCテンプレート -->
+    <bean id="jdbcTemplate1" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource1" />
+    </bean>
+
+</beans>

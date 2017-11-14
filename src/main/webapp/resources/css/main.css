@@ -1,0 +1,202 @@
+@charset "UTF-8";
+
+/*************************************************************
+ * General
+ *************************************************************/
+
+body {
+    background-color: #E8E8E8;
+    word-wrap: break-word;
+}
+
+.page {
+    background-color: #FFFFFF;
+    border: solid 1px #000000;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.page h1 {
+    font-size: x-large;
+    text-align: center;
+}
+
+.content {
+    padding: 10px;
+    min-height: 400px;
+}
+
+.error-message-area {
+    background-color: #FF0033;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin: 0 auto 20px;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+/*************************************************************
+ * home
+ *************************************************************/
+
+.page-home {
+}
+
+.page-home .content {
+    text-align: center;
+}
+
+.page-home .footer {
+    text-align: center;
+}
+
+/*************************************************************
+ * messages/list
+ *************************************************************/
+
+.page-messages-list {
+}
+
+.page-messages-list .content {
+    text-align: center;
+}
+
+.page-messages-list .messageListTable {
+    padding: 10px;
+    table-layout: fixed;
+}
+
+.page-messages-list .messageListTable th {
+    background-color: #98FB98;
+    text-align: center;
+}
+
+.page-messages-list .messageListTable td {
+    background-color: #FFFAFA;
+}
+
+.page-messages-list .messageListTable col.message-messageId {
+    width: 50px;
+}
+
+.page-messages-list .messageListTable td.message-messageId {
+    text-align: right;
+}
+
+.page-messages-list .messageListTable col.message-title {
+    width: 150px;
+}
+
+.page-messages-list .messageListTable td.message-title {
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.page-messages-list .messageListTable col.message-content {
+}
+
+.page-messages-list .messageListTable td.message-content {
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.page-messages-list .messageListTable col.message-validPeriodInDays {
+    width: 80px;
+}
+
+.page-messages-list .messageListTable td.message-validPeriodInDays {
+    text-align: center;
+}
+
+.page-messages-list .messageListTable col.message-createdDatetime {
+    width: 100px;
+}
+
+.page-messages-list .messageListTable td.message-createdDatetime {
+    text-align: center;
+}
+
+.page-messages-list .messageListTable col.message-operations {
+    width: 100px;
+}
+
+.page-messages-list .messageListTable td.message-operations {
+    text-align: center;
+}
+
+/*************************************************************
+ * messages/register_entry
+ *************************************************************/
+
+.page-messages-register-entry {
+}
+
+.page-messages-register-entry .error-message {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/*************************************************************
+ * messages/register_confirm
+ *************************************************************/
+
+.page-messages-register-confirm {
+}
+
+/*************************************************************
+ * messages/registercompleted
+ *************************************************************/
+
+.page-messages-registercompleted {
+}
+
+.page-messages-registercompleted .links {
+    margin-top: 20px;
+}
+
+/*************************************************************
+ * messages/edit
+ *************************************************************/
+
+.page-messages-edit {
+}
+
+.page-messages-edit .error-message {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/*************************************************************
+ * messages/editcompleted
+ *************************************************************/
+
+.page-messages-editcompleted {
+}
+
+.page-messages-editcompleted .links {
+    margin-top: 20px;
+}
+
+/*************************************************************
+ * messages/delete
+ *************************************************************/
+
+.page-messages-delete {
+}
+
+/*************************************************************
+ * messages/deletecompleted
+ *************************************************************/
+
+.page-messages-deletecompleted {
+}
+
+.page-messages-deletecompleted .links {
+    margin-top: 20px;
+}
+

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!-- Mavenのためのプロジェクト設定ファイル -->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 当プロジェクトの情報 -->
+    <groupId>app.web</groupId>
+    <artifactId>message-board</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+    <name>Message Board</name>
+
+    <!-- 置換変数の定義 -->
+    <properties>
+        <java-version>1.8</java-version>
+
+        <!-- 各依存ライブラリのバージョン番号 -->
+        <!-- 最新バージョンはMaven Repository(https://mvnrepository.com/)等で調べられる -->
+        <spring-version>4.3.3.RELEASE</spring-version>
+        <slf4j-version>1.7.21</slf4j-version>
+        <logback-version>1.1.7</logback-version>
+        <servlet-api-version>3.1.0</servlet-api-version>
+        <jsp-api-version>2.3.1</jsp-api-version>
+        <jstl-version>1.2</jstl-version>
+        <hibernate-validator-version>5.2.4.Final</hibernate-validator-version>
+        <jackson-databind-version>2.8.6</jackson-databind-version>
+        <lombok-version>1.16.10</lombok-version>
+        <commons-dbcp2-version>2.1.1</commons-dbcp2-version>
+        <mysql-connector-java-version>5.1.40</mysql-connector-java-version>
+    </properties>
+
+    <!-- 依存ライブラリ定義のための定義 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring FrameworkのBOM(bill of materials) -->
+            <!-- Spring Frameworkの各コンポーネントのバージョン指定(version)が不要になる -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 依存するライブラリの定義 -->
+    <dependencies>
+        <!-- [Spring Framework] -->
+
+        <!-- Spring Web MVC -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+
+            <exclusions>
+                <!-- Commons Loggingの代わりにSLF4Jを使うので除外 -->
+                <!-- Spring Framework内部のCommons Loggingの呼び出しはjcl-over-slf4jが代わりに処理する -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Spring JDBC -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+
+        <!-- [ログ出力関連] -->
+
+        <!-- SLF4J(Simple Logging Facade for Java) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <!-- Commons Loggingの呼び出しをSLF4Jの呼び出しに変換するブリッジ -->
+        <!-- コンパイル時は不要(scope=runtime) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Logback -->
+        <!-- コンパイル時は不要(scope=runtime) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- [Servlet/JSP関連] -->
+
+        <!-- Java Servlet API -->
+        <!-- 実行時はJava EE実行環境が提供するはずなので不要(scope=provided) -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSP API -->
+        <!-- 実行時はJava EE実行環境が提供するはずなので不要(scope=provided) -->
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jsp-api-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSTL(JSP Standard Tag Library) -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl-version}</version>
+        </dependency>
+
+        <!-- [その他] -->
+
+        <!-- Hibernate Validator -->
+        <!-- @NotEmpty等のアノテーションによるBean Validationのサポート -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator-version}</version>
+        </dependency>
+
+        <!-- Jackson Databind -->
+        <!-- JSONとのマッピングのサポート -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind-version}</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <!-- @DataによるGetter/Setterのコンパイル時の自動生成等ができる -->
+        <!-- 別途インストール作業が必要 -->
+        <!-- 実行時は不要(scope=provided) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Apache Commons DBCP -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${commons-dbcp2-version}</version>
+
+            <exclusions>
+                <!-- Commons Loggingの代わりにSLF4Jを使うので除外 -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- MySQL JDBC driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java-version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- ビルド方法に関する設定 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <additionalProjectnatures>
+                        <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+                    </additionalProjectnatures>
+                    <additionalBuildcommands>
+                        <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+                    </additionalBuildcommands>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>org.test.int1.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
