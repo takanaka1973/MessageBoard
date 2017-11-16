@@ -31,7 +31,7 @@ import app.web.message_board.service.MessageService;
 @RequestMapping("/messages")
 public class MessageController {
 
-    @SuppressWarnings("unused")
+    //@SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     @Autowired

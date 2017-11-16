@@ -30,7 +30,7 @@ import app.web.message_board.service.MessageService;
 @RequestMapping("/api")
 public class WebApiController {
 
-    @SuppressWarnings("unused")
+    //@SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(WebApiController.class);
 
     @Autowired
